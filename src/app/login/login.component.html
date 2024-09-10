@@ -1,0 +1,33 @@
+<h2>Login</h2>
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+  <!-- Username Section -->
+  <label for="username">Username (Email):</label>
+  <input id="username" type="email" formControlName="username">
+  <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+    Invalid username
+  </div>
+
+  <div class="forgot-email">
+    <a (click)="onForgotEmail()">Forgot Email?</a>
+  </div>
+  
+  <!-- Password Section -->
+  <label for="password">Password:</label>
+  <input id="password" [type]="showPassword ? 'text' : 'password'" formControlName="password">
+  <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+    Password must be 8-16 characters long, with at least one capital letter and one special character.
+  </div>
+
+  <div class="password-options">
+    <label>
+      <input type="checkbox" (change)="toggleShowPassword()" /> Show Password
+    </label>
+    <a (click)="onForgotPassword()">Forgot Password?</a>
+  </div>
+
+  <!-- Account and Submit Section -->
+  <div class="account-and-next">
+    <a (click)="onCreateAccount()" class="create-account">Create Account</a>
+    <button type="submit" class="login-button">Login</button>
+  </div>
+</form>

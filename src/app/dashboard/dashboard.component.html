@@ -1,0 +1,41 @@
+<h2>Welcome {{ 'Mounika' }}</h2>
+<div class="container">
+  <h2>Daily Report</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Date</th>
+        <th>Topic</th>
+        <th>Remarks</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of reportEntries; let i = index">
+        <td>{{ entry.sno }}</td>
+        <td>{{ entry.date }}</td>
+        <td>{{ entry.topic }}</td>
+        <td>{{ entry.remarks }}</td>
+        <td>
+          <button (click)="editEntry(i)">Edit</button>
+          <button (click)="deleteEntry(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <form (ngSubmit)="addOrUpdateEntry()">
+    <label for="date">Date:</label>
+    <input type="date" [(ngModel)]="currentEntry.date" name="date" [max]="maxDate" placeholder="dd-mm-yyyy" required />
+
+    <label for="topic">Topic:</label>
+    <input type="text" [(ngModel)]="currentEntry.topic" name="topic" required />
+
+    <label for="remarks">Remarks:</label>
+    <input type="text" [(ngModel)]="currentEntry.remarks" name="remarks" required />
+
+    <button type="submit">{{ isEditMode ? 'Update' : 'Add' }}</button>
+  </form>
+</div>
+<button class="logout-button" (click)="logout()">Logout</button>

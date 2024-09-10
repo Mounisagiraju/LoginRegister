@@ -1,0 +1,54 @@
+<h2>Registration Form</h2>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <p>Please fill the required details</p>
+  <label for="firstname">First Name: <span class="required">*</span></label>
+  <input id="firstname" formControlName="firstname">
+  <div *ngIf="registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.touched" class="error">
+    First Name is required
+  </div>
+
+  <label for="lastname">Last Name:</label>
+  <input id="lastname" formControlName="lastname">
+
+  <label>Gender:</label>
+  <label><input type="radio" formControlName="gender" value="male"> Male</label>
+  <label><input type="radio" formControlName="gender" value="female"> Female</label>
+
+  <label for="phone">Phone Number: <span class="required">*</span></label>
+  <input id="phone" formControlName="phone">
+  <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="error">
+    Invalid phone number
+  </div>
+
+  <label for="email">Email: <span class="required">*</span></label>
+  <input id="email" formControlName="email">
+  <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error">
+    <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</div>
+    <div *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email address</div>
+  </div>
+
+  <label for="password">Password: <span class="required">*</span></label>
+  <div class="password-wrapper">
+    <input id="password" [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+    <i class="fas" [ngClass]="hidePassword ? 'fa-eye-slash' : 'fa-eye'" (click)="togglePasswordVisibility('password')"></i>
+  </div>
+  <div *ngIf="registerForm.get('password')?.dirty && registerForm.get('password')?.invalid" class="error">
+    Password must be 8-16 characters long, with at least one capital letter and one special character.
+  </div>
+
+  <label for="confirmPassword">Confirm Password: <span class="required">*</span></label>
+  <div class="password-wrapper">
+    <input id="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword">
+    <i class="fas" [ngClass]="hideConfirmPassword ? 'fa-eye-slash' : 'fa-eye'" (click)="togglePasswordVisibility('confirmPassword')"></i>
+  </div>
+  <div *ngIf="registerForm.get('confirmPassword')?.dirty && registerForm.get('confirmPassword')?.invalid" class="error">
+    Confirm Password is required
+  </div>
+
+  <div *ngIf="registerForm.errors?.['mismatch'] && 
+                (registerForm.get('password')?.dirty || registerForm.get('confirmPassword')?.dirty)" class="error">
+    Passwords do not match
+  </div>
+
+  <button type="submit">Register</button>
+</form>
